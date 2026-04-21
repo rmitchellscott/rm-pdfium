@@ -4,13 +4,13 @@
 [![rm2](https://img.shields.io/badge/rM2-supported-green)](https://remarkable.com/store/remarkable-2)
 [![rmpp](https://img.shields.io/badge/rMPP-supported-green)](https://remarkable.com/store/overview/remarkable-paper-pro)
 [![rmppm](https://img.shields.io/badge/rMPPM-supported-green)](https://remarkable.com/products/remarkable-paper/pro-move)
-<picture>
-  <source srcset="assets/rm-pdfium-logo-dark.svg" media="(prefers-color-scheme: dark)">
-  <img src="assets/rm-pdfium-logo.svg" alt="rm-pdfium Logo" width="125" align="right">
-</picture>
+<img src="assets/rm-pdfium-logo.svg" alt="rm-pdfium Logo" width="125" align="right">
 <p align="justify">
 
 A xovi extension that exposes PDF page manipulation via the device's built-in `libpdfium.so`. 
+</p>
+
+<br clear="right">
 
 ## Dependencies
 
