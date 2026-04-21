@@ -1,0 +1,7 @@
+version 0.1.0
+
+export trimPdf
+with
+    xovi-message-broker$simpleSignal = "trimPdf"
+    xovi-message-broker$version = 1
+end

@@ -1,0 +1,7 @@
+*.o
+*.so
+*.stash
+xovi.c
+xovi.h
+xovi.cpp
+Makefile

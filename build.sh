@@ -1,0 +1,41 @@
+#!/bin/bash
+set -e
+
+echo "Building rm-pdfium for all architectures..."
+
+echo ""
+echo "=== Building for aarch64 (Paper Pro) ==="
+docker run --rm -v $(pwd):/build eeems/remarkable-toolchain:latest-rmpp bash -c "
+  cd /build && \
+  . /opt/codex/*/*/environment-setup-* && \
+  export XOVI_REPO=/tmp/xovi && \
+  git clone https://github.com/asivery/xovi \$XOVI_REPO 2>/dev/null || true && \
+  python3 \$XOVI_REPO/util/xovigen.py -o xovi.c -H xovi.h rm-pdfium.xovi && \
+  qmake . && \
+  make && \
+  mv rm-pdfium.so rm-pdfium-aarch64.so && \
+  make clean
+"
+echo "Built: rm-pdfium-aarch64.so"
+
+echo ""
+echo "=== Building for armv7 (reMarkable 2) ==="
+docker run --rm -v $(pwd):/build eeems/remarkable-toolchain:latest-rm2 bash -c "
+  cd /build && \
+  . /opt/codex/*/*/environment-setup-* && \
+  export XOVI_REPO=/tmp/xovi && \
+  git clone https://github.com/asivery/xovi \$XOVI_REPO 2>/dev/null || true && \
+  python3 \$XOVI_REPO/util/xovigen.py -o xovi.c -H xovi.h rm-pdfium.xovi && \
+  qmake . && \
+  make && \
+  mv rm-pdfium.so rm-pdfium-armv7.so && \
+  make clean
+"
+echo "Built: rm-pdfium-armv7.so"
+
+echo ""
+echo "=========================================="
+echo "Build complete!"
+echo "  - rm-pdfium-aarch64.so"
+echo "  - rm-pdfium-armv7.so"
+echo "=========================================="
