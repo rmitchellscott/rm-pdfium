@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "Building rm-pdfium for all architectures..."
+echo "Building rm-pdfium for both architectures..."
 
 echo ""
 echo "=== Building for aarch64 (Paper Pro) ==="
