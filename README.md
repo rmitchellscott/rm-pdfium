@@ -3,7 +3,8 @@
 [![rm1](https://img.shields.io/badge/rM1-supported-green)](https://remarkable.com/store/remarkable)
 [![rm2](https://img.shields.io/badge/rM2-supported-green)](https://remarkable.com/store/remarkable-2)
 [![rmpp](https://img.shields.io/badge/rMPP-supported-green)](https://remarkable.com/store/overview/remarkable-paper-pro)
-[![rmppm](https://img.shields.io/badge/rMPPM-supported-green)](https://remarkable.com/products/remarkable-paper/pro-move)
+[![rmppmove](https://img.shields.io/badge/rMPPMove-supported-green)](https://remarkable.com/products/remarkable-paper/pro-move)
+[![rmppure](https://img.shields.io/badge/rMPPure-supported-green)](https://remarkable.com/products/remarkable-paper/pure)
 <img src="assets/rm-pdfium-logo.svg" alt="rm-pdfium Logo" width="125" align="right">
 <p align="justify">
 
@@ -49,11 +50,29 @@ Parameters: `sourcePath,destPath,pageRange`
 
 Returns `ok` on success or `ERROR: <message>` on failure.
 
+### getPageText
+
+Extract all text from a single page as UTF-8.
+
+```bash
+echo '>egetPageText:/path/to/source.pdf,3' > /run/xovi-mb; cat /run/xovi-mb-out
+```
+
+Parameters: `sourcePath,page`
+
+- **sourcePath** - full path to source PDF
+- **page** - 1-indexed page number
+
+Returns the page text (UTF-8, whitespace and line breaks preserved in reading order) on success, an empty string if the page has no extractable text, or `ERROR: <message>` on failure. Pages that are scanned images without a text layer return empty (PDFium does not OCR).
+
+Note: documents the tablet rendered from EPUB using EB Garamond carry a broken `/ToUnicode` table. Ligatures extract as wrong or missing characters (`floor`→`Soor`, `find`→`nd`). This is baked into the PDF by reMarkable's renderer and is not recoverable from the PDF by any extractor. Rendering the book in Noto typefaces produces clean, extractable text.
+
 ### Available Signals
 
 | Signal | Parameter | Returns |
 |--------|-----------|---------|
 | `trimPdf` | `sourcePath,destPath,pageRange` | `ok` |
+| `getPageText` | `sourcePath,page` | page text (UTF-8) |
 
 ## Building
 
@@ -62,8 +81,8 @@ Returns `ok` on success or `ERROR: <message>` on failure.
 ```
 
 Builds for both architectures using Docker:
-- `rm-pdfium-aarch64.so` - reMarkable Paper Pro
-- `rm-pdfium-armv7.so` - reMarkable 2
+- `rm-pdfium-aarch64.so` - reMarkable Paper Pro/Move/Pure
+- `rm-pdfium-armv7.so` - reMarkable 1/2
 
 ## License
 

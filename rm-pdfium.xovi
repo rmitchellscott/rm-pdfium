@@ -5,3 +5,9 @@ with
     xovi-message-broker$simpleSignal = "trimPdf"
     xovi-message-broker$version = 1
 end
+
+export getPageText
+with
+    xovi-message-broker$simpleSignal = "getPageText"
+    xovi-message-broker$version = 1
+end
