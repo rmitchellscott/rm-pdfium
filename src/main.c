@@ -192,9 +192,16 @@ static int full_write(int fd, const void *buf, size_t n)
    child so a malformed PDF cannot take down the host. */
 static void child_get_text(const char *srcPath, int page, int wfd)
 {
-    void *h = dlmopen(LM_ID_NEWLM, "/usr/lib/libpdfium.so", RTLD_NOW);
+    /* FreeType dlopen()s HarfBuzz on init, which crashes ld.so inside a fresh
+       namespace unless it is already loaded there. */
+    void *harfbuzz = dlmopen(LM_ID_NEWLM, "libharfbuzz.so.0", RTLD_NOW);
+    Lmid_t privateLinkMap;
+    if (!harfbuzz || dlinfo(harfbuzz, RTLD_DI_LMID, &privateLinkMap) != 0)
+        _exit(3);
+
+    void *h = dlmopen(privateLinkMap, "/usr/lib/libpdfium.so", RTLD_NOW);
     if (!h)
-        h = dlmopen(LM_ID_NEWLM, "libpdfium.so", RTLD_NOW);
+        h = dlmopen(privateLinkMap, "libpdfium.so", RTLD_NOW);
     if (!h)
         _exit(3);
 
